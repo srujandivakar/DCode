@@ -16,6 +16,7 @@ import About from "./pages/About";
 import DiscussPage from "./pages/DiscussPage";
 import ProfilePage from "./pages/ProfilePage";
 import CreateProblem from "./pages/CreateProblem";
+import EditProblem from "./pages/EditProblem";
 import VerifyEmail from "./pages/VerifyEmail";
 import PlaylistPage from "./pages/PlaylistPage";
 import ForgotPasswordPage from "./pages/ForgotPassword";
@@ -120,6 +121,15 @@ const App = () => {
           element={
             <PrivateRoute>
               <CreateProblem />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/problem/:problemId/edit"
+          element={
+            <PrivateRoute>
+              <EditProblem />
             </PrivateRoute>
           }
         />

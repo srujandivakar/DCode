@@ -13,8 +13,9 @@ import {
   ChevronsUp,
   StarIcon,
   Trash,
+  Edit,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { debounce } from "@/utils/debounce";
@@ -66,6 +67,7 @@ const ProblemsetPage = () => {
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState(true);
   const { userData } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
   const [showPlaylist, setShowPlaylist] = useState(false);
   const [addProblem, setAddProblem] = useState("");
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -242,6 +244,10 @@ const ProblemsetPage = () => {
       setDeleteDialogOpen(false);
       setProblemToDelete(null);
     }
+  };
+
+  const handleEditClick = (problemId: string) => {
+    navigate(`/problem/${problemId}/edit`);
   };
 
   const toggleCheckBox = (value: string, type: keyof FilterCheckBox) => {
@@ -643,15 +649,26 @@ const ProblemsetPage = () => {
                           : problem.difficulty}
                       </span>
                       {userData?.role === "ADMIN" && (
-                        <Trash
-                          size={18}
-                          className="text-red-400 hover:text-red-500 cursor-pointer transition-colors"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            handleDeleteClick(problem.id);
-                          }}
-                        />
+                        <>
+                          <Edit
+                            size={18}
+                            className="text-blue-400 hover:text-blue-500 cursor-pointer transition-colors"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleEditClick(problem.id);
+                            }}
+                          />
+                          <Trash
+                            size={18}
+                            className="text-red-400 hover:text-red-500 cursor-pointer transition-colors"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleDeleteClick(problem.id);
+                            }}
+                          />
+                        </>
                       )}
                     </div>
                   </Card>
